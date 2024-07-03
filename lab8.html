@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diffie-Hellman Key Exchange</title>
+    <script>
+      function generateKeys() {
+        // Get prime (p), base (g), and private keys from user input
+        const prime = BigInt(document.getElementById("prime").value);
+        const base = BigInt(document.getElementById("base").value);
+        const alicePrivateKey = BigInt(
+          document.getElementById("alicePrivate").value
+        );
+        const bobPrivateKey = BigInt(
+          document.getElementById("bobPrivate").value
+        );
+        // Calculate public key for Alice and Bob
+        const alicePublicKey = base ** alicePrivateKey % prime; // Alice's public key
+        const bobPublicKey = base ** bobPrivateKey % prime; // Bob's public key
+        // Calculate shared secret key for Alice and Bob
+        const aliceSharedKey = bobPublicKey ** alicePrivateKey % prime; // Alice's shared key
+        const bobSharedKey = alicePublicKey ** bobPrivateKey % prime; // Bob's shared key
+        // Display results
+        document.getElementById("alicePublic").innerHTML =
+          alicePublicKey.toString();
+        document.getElementById("bobPublic").innerHTML =
+          bobPublicKey.toString();
+        document.getElementById("aliceShared").innerHTML =
+          aliceSharedKey.toString();
+        document.getElementById("bobShared").innerHTML =
+          bobSharedKey.toString();
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Diffie-Hellman Key Exchange</h1>
+    <label for="prime">Enter Prime (p):</label>
+    <input type="number" id="prime" name="prime" required /><br /><br />
+    <label for="base">Enter Base (g):</label>
+    <input type="number" id="base" name="base" required /><br /><br />
+    <label for="alicePrivate">Enter Alice's Private Key:</label>
+    <input
+      type="number"
+      id="alicePrivate"
+      name="alicePrivate"
+      required
+    /><br /><br />
+    <label for="bobPrivate">Enter Bob's Private Key:</label>
+    <input
+      type="number"
+      id="bobPrivate"
+      name="bobPrivate"
+      required
+    /><br /><br />
+    <button onclick="generateKeys()">Perform Key Exchange</button>
+    <div>
+      <h2>Alice's Keys</h2>
+      <p>Public Key: <span id="alicePublic"></span></p>
+      <p>Shared Key: <span id="aliceShared"></span></p>
+    </div>
+    <div>
+      <h2>Bob's Keys</h2>
+      <p>Public Key: <span id="bobPublic"></span></p>
+      <p>Shared Key: <span id="bobShared"></span></p>
+    </div>
+  </body>
+</html>
